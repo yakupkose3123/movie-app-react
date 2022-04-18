@@ -9,12 +9,12 @@ import {
 //* https://firebase.google.com/docs/auth/web/start
 //* https://console.firebase.google.com/ => project settings
 const firebaseConfig = {
-  apiKey: "AIzaSyD9sSQwSaKtzhfIBASf1lCIOZkqk-D_9tk",
-  authDomain: "movie-app-8a08d.firebaseapp.com",
-  projectId: "movie-app-8a08d",
-  storageBucket: "movie-app-8a08d.appspot.com",
-  messagingSenderId: "604910244623",
-  appId: "1:604910244623:web:7fe3a4b73b901aef23647a"
+  apiKey: "AIzaSyCrqkTuTWP530gglkoyUfMuJPdRIdqsTZ8",
+  authDomain: "movie-project-3c964.firebaseapp.com",
+  projectId: "movie-project-3c964",
+  storageBucket: "movie-project-3c964.appspot.com",
+  messagingSenderId: "417726452243",
+  appId: "1:417726452243:web:7e223a896e1fa8714ce5e6"
 };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -43,7 +43,7 @@ export const signIn = async (email, password, navigate) => {
       password
     );
     navigate("/");
-    console.log(userCredential);
+    // console.log(userCredential);
   } catch (err) {
     alert(err.message);
   }

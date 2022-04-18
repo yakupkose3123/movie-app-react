@@ -28,7 +28,7 @@ const Navbar = () => {
             )}
 
             {currentUser ? (
-              <button className="ms-2 btn btn-outline-light" onClick={logOut}>Logout</button>
+              <button className="ms-2 btn btn-outline-light" onClick={()=>logOut()}>Logout</button>
             ) : (
               <button
                 className="ms-2 btn btn-outline-light"

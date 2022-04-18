@@ -10,7 +10,6 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     signIn(email,password,navigate)
-    console.log(email, password);
   };
   return (
     <div className="d-flex justify-content-center">
