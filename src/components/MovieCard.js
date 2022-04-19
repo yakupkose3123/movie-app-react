@@ -1,7 +1,35 @@
-import React from "react";
+import React, { useContext } from "react";
+import {AuthContext} from "../context/AuthContext"
 
-const MovieCard = () => {
-  return <div>MovieCard</div>;
+
+const IMG_API = "https://image.tmdb.org/t/p/w1280";
+//sorun çıkarsa diye default image
+const defaultImage =
+  "https://images.unsplash.com/photo-1581905764498-f1b60bae941a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80";
+
+
+const MovieCard = ({title, poster_path, overview, vote_average, id}) => {
+  const {currentUser} = useContext(AuthContext);
+
+  return (
+    <div className="movie">
+      <img src={poster_path ? IMG_API + poster_path : defaultImage } alt="movie_image" />
+      <div className="d-flex align-items-baseline justify-content-between p-1 text-white">
+        <h5>{title}</h5>
+        {/* span içinde puanlamaya göre farklı css leri aktif etmek için turnery içinde turnary koşulu yazdık */}
+        {currentUser && 
+        <span 
+          className={`tag ${vote_average >= 8 ? "green" :vote_average >= 6 ? "orange": "red" }`}>{vote_average}</span>
+          }
+      </div>
+      {currentUser && 
+      <div className="movie-over">
+        <h2>Owerview</h2>
+        <p>{overview}</p>
+      </div>
+      }
+    </div>
+  );
 };
 
 export default MovieCard;

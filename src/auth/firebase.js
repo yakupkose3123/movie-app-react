@@ -4,30 +4,37 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
+  onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 
 //* https://firebase.google.com/docs/auth/web/start
 //* https://console.firebase.google.com/ => project settings
 const firebaseConfig = {
-  apiKey: "AIzaSyCrqkTuTWP530gglkoyUfMuJPdRIdqsTZ8",
-  authDomain: "movie-project-3c964.firebaseapp.com",
-  projectId: "movie-project-3c964",
-  storageBucket: "movie-project-3c964.appspot.com",
-  messagingSenderId: "417726452243",
-  appId: "1:417726452243:web:7e223a896e1fa8714ce5e6"
+  apiKey: process.env.REACT_APP_apiKey,
+  authDomain: process.env.REACT_APP_authDomain ,
+  projectId: process.env.REACT_APP_projectId,
+  storageBucket: process.env.REACT_APP_storageBucket,
+  messagingSenderId: process.env.REACT_APP_messagingSenderId,
+  appId: process.env.REACT_APP_appId,
 };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 // Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth(app);
 
-export const createUser = async (email, password, navigate) => {
+export const createUser = async (email, password, navigate, displayName) => {
   try {
     let userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
+    await updateProfile(auth.currentUser, {
+      displayName: displayName
+    })
     navigate("/");
     console.log(userCredential);
   } catch (err) {
@@ -43,7 +50,7 @@ export const signIn = async (email, password, navigate) => {
       password
     );
     navigate("/");
-    // console.log(userCredential);
+    console.log(userCredential);
   } catch (err) {
     alert(err.message);
   }
@@ -51,5 +58,30 @@ export const signIn = async (email, password, navigate) => {
 
 export const logOut = () => {
   signOut(auth);
-  alert("logged out successfully")
+  // alert("logged out successfully")
+};
+
+export const userObserver = (setCurrentUser)=>{
+  onAuthStateChanged(auth, (curretUser) => {
+    if (curretUser) {
+      setCurrentUser(curretUser)
+    } else {
+      // User is signed out
+      setCurrentUser(false)
+    }
+  });
+};
+
+
+//! for continiu with Google
+
+export const signUpProvider = (navigate) => {
+  const provider = new GoogleAuthProvider();
+  signInWithPopup(auth, provider)
+  .then((result) => {
+   navigate("/")
+  }).catch((error) => {
+    console.log(error);    
+  });
+
 }

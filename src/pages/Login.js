@@ -1,6 +1,6 @@
 import React, { useState} from "react";
 import { useNavigate } from "react-router-dom";
-import { signIn } from "../auth/firebase";
+import { signIn, signUpProvider } from "../auth/firebase";
 
 const Login = () => {
   const [email, setEmail] = useState();
@@ -11,6 +11,10 @@ const Login = () => {
     e.preventDefault();
     signIn(email,password,navigate)
   };
+
+  const handleGoogleProvider = ()=> {
+    signUpProvider(navigate)
+  }
   return (
     <div className="d-flex justify-content-center">
       <div className="form-image">
@@ -52,7 +56,7 @@ const Login = () => {
             // onSubmit={handleSubmit}
           />
         </form>
-        <button className="btn btn-primary form-control">
+        <button className="btn btn-primary form-control" onClick={handleGoogleProvider}>
           Continue with Google
         </button>
       </div>
